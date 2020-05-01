@@ -63,7 +63,7 @@ void draw(){
     fill(#FFFFFF);
     textSize(100);
     textFont(style);
-    text ( "Niveau" ,500, 100 );
+    text ("Niveau" ,500, 100 );
     fill(#ff0000);
     rect(retX, retY, retL, retl, 7);
     fill(#FFFFFF);
@@ -74,12 +74,13 @@ void draw(){
     fill(#FFFFFF);
     textSize(70);
     text("Histoire",500,210);
+    
   }
   if (option){
     background(image_espace);
     textFont(style);
     textSize(100);
-    text ( "Option" ,500, 100 );
+    text ("Option" ,500, 100 );
     fill(#ff0000);
     rect(retX, retY, retL, retl, 7);
     fill(#FFFFFF);
@@ -87,15 +88,23 @@ void draw(){
     text("Retour",100,730);
   }
   if (histoire){
+    
     background(image_espace);
     textFont(style);
+    fill(#FFFFFF);
     textSize(100);
-    text("histoire",500,100);
+    text("Histoire",500,100);
     fill(#ff0000);
     rect(nX,nY, nL, nl, 7);
     fill(#FFFFFF);
     textSize(80);
     text("<",50,745);
+    fill(#000000,110); 
+    rect(40,150,1100,525);
+    fill(#FFFFFF);
+    textSize(35);
+    text("Sur Terre, la population existe toujours en 2204 malgré les centaines de millions \nde mort à cause d’une maladie. Le 1 janvier 2200 à minuit, une météorite s’écrasa \nsur la Terre, transportant une bactérie très contagieuse à l’intérieur. Ils l’appelèrent \nPAX-200 et a pour effet de détruire les globules rouges des malades, entraînant \nla mort du patient. Il est extrêmement virulent et même si des mesure ont été prise \nrapidement, il fait des ravage chaque année. Dans ce jeu vous incarnerez le \ncommandant Woods, qui viens de prendre connaissance de sa nouvelle mission pour \nsauver l’humanité : aller chercher des antidotes sur d’autres planètes, après la \ndécouverte des scientifiques de la provenance du virus. Vous devrez donc visiter \nune multitude de planète pour trouver ces antidotes. \nBon courage.",50,200);
+    
   }
 }
 void mousePressed() {
@@ -125,7 +134,7 @@ void mousePressed() {
 void update(int x, int y) {
   if (accueil){
   if (boutonniv(nivX,nivY,nivL,nivl)){
-    nivbouton = true;
+    nivbouton = true ;
     optbouton = false;
     retourbouton = false;
     hisbouton = false;
@@ -135,14 +144,20 @@ void update(int x, int y) {
     nivbouton = false;
     retourbouton = false;
     hisbouton = false;
- }}
+ }
+    else {
+     nivbouton = optbouton = false;
+  }}
  else if(option){
    if (boutonret(retX,retY,retL,retl)){
     retourbouton = true;
     optbouton = false;
     nivbouton = false;
     hisbouton = false;
- }}
+ }
+    else {
+     retourbouton = false;
+  }}
  else if (niveau){
    if (boutonhis(hisX,hisY,hisL,hisl)){
     hisbouton = true;
@@ -150,23 +165,25 @@ void update(int x, int y) {
     optbouton = false;
     nivbouton = false;
   }
-  else if (boutonret(retX,retY,retL,retl)){
+   else if (boutonret(retX,retY,retL,retl)){
     retourbouton = true;
     optbouton = false;
     nivbouton = false;
     hisbouton = false;
- }}
+ }
+    else {
+     retourbouton = hisbouton = false;
+  }}
  else if (histoire){
    if (boutonniv(nX,nY,nL,nl)){
-    retourbouton = false;
-    optbouton = false;
     nivbouton = true;
+    retourbouton = false;
+    optbouton = false;  
     hisbouton = false;
- }}
-   else {
-     nivbouton = optbouton = retourbouton = hisbouton = false;
-  }
-}
+ }
+    else {
+     nivbouton = false;
+  }}}
 boolean boutonniv (int x, int y, int L, int l)  {
   if (mouseX >= x && mouseX <= x+L && 
       mouseY >= y && mouseY <= y+l) {
