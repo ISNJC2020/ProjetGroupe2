@@ -1,6 +1,6 @@
 PImage image_espace;
 
-boolean deplacementGauche = false, deplacementDroite = false, enSaut = false;
+boolean deplacementGauche = false, deplacementDroite = false, enSaut = false, enChute = false;
 int xpers = 200, ypers = 500, yDebutSaut = -50, sauvegardeY = 0;
 float t = 0.00, g = 15.2, v = -65;
 
@@ -22,7 +22,7 @@ void draw(){
 void keyPressed(){
   if(keyCode == RIGHT) deplacementDroite = true;
   if(keyCode == LEFT) deplacementGauche = true;
-  if(keyCode == UP) enSaut = true;
+  if(keyCode == UP && !enChute) enSaut = true;
 }
 
 void keyReleased(){
@@ -40,14 +40,27 @@ void affichagePersonnage(){
     ypers = int(g/2 * (t*t) + v*t + yDebutSaut);
     t += 0.08;
     
+    if(sauvegardeY < ypers) {
+      yDebutSaut = sauvegardeY; 
+      ypers = sauvegardeY;
+      enSaut = false;
+      enChute = true;
+      t = 0;
+    }
+    }
+  
+  
+  if(enChute){
+    sauvegardeY = ypers;
+    ypers = int(g/2 * (t*t) + yDebutSaut);
+    t += 0.08;
+    
     if(xpers < 0 + 1200 && xpers + 100 > 0 && ypers < 600 + 200 && 100 + ypers > 600){
-    ypers = sauvegardeY;
-    yDebutSaut = -50;
-    enSaut = false;
+      ypers = sauvegardeY;
+      yDebutSaut = -50;
+      enChute = false;
     }
   }
-  
-  
   fill( #f0ff00 );
   rect(xpers, ypers, 100, 100);
 }
